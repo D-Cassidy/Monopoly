@@ -1,3 +1,14 @@
+"""
+Author: Declan Cassidy
+
+TODO: 
+- Community Chest Cards
+- Chance Cards 
+- Turns + Dice Rolling 
+- Test get_rent function more
+"""
+
+
 import numpy as np
 from constants import PROPERTY_INFO
 from constants import SQUARE_NAMES
@@ -71,17 +82,23 @@ class Property(Square):
         return "property"
 
     def get_rent(self, prop, player, roll=0):
+        """Takes in property class, player class, and the player's roll that turn
+        returns amount of rent owed on property
+        """
         rent = -1
         utilities = ['Electric Company', 'Water Works']
         rr = ['Reading Railroad', 'Pennsylvania Railroad', 'B. & O. Railroad', 'Short Line']
 
-        if (property.name in utilities):
+        if (prop.owner == player.number or prop.owner == -1):
+            return 0
+
+        if (prop.name in utilities):
             count = -1
             for p in utilities:
                 if (p in player.properties): count+=1
             rent = prop.rent[count] * roll
 
-        elif (property.name in rr):
+        elif (prop.name in rr):
             count = -1
             for p in rr:
                 if (p in player.properties): count+=1
